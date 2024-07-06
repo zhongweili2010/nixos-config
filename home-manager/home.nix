@@ -20,7 +20,7 @@ in
     ];
   };
 
-  file.".config/alacritty/alacritty.toml".source = ./config/alacritty.toml;
+  file."./config/alacritty.toml".source = ./config/alacritty.toml;
 
   programs.zsh.enable = true;
 
