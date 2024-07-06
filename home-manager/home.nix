@@ -18,9 +18,12 @@ in
       vscode-with-extensions
       alacritty
     ];
+    file."./config/alacritty.toml".source = {
+      source=./config/alacritty.toml;
+      target="${config.home.homeDirectory}/.config/alacritty/alacritty.toml";
+    }
   };
 
-  file."./config/alacritty.toml".source = ./config/alacritty.toml;
 
   programs.zsh.enable = true;
 
