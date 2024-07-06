@@ -145,11 +145,7 @@
   environment.systemPackages = with pkgs; [
     google-chrome
     alacritty
-    (vscode-with-extensions.override {
-      vscodeExtensions = with vscode-extensions; [
-        jnoortheen.nix-ide
-      ];
-    })
+    git
  ];
 
 
