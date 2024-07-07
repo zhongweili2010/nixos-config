@@ -6,6 +6,8 @@ let
       jnoortheen.nix-ide
     ];
   };
+
+  alacrittyConfig = import ./alacritty.nix { inherit config pkgs; };
 in
 {
   programs.home-manager.enable = true;
@@ -18,10 +20,12 @@ in
       vscode-with-extensions
       alacritty
     ];
-    file."./config/alacritty.toml".source = {
-      source=./config/alacritty.toml;
-      target="${config.home.homeDirectory}/.config/alacritty/alacritty.toml";
-    }
+
+    # Import and apply the Alacritty configuration
+    inherit (alacrittyConfig.programs) alacritty;
+
+    
+
   };
 
 
