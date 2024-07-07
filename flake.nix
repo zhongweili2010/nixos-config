@@ -1,4 +1,3 @@
-
 {
   description = "My NixOS and Home Manager Configuration";
 
@@ -25,5 +24,4 @@
       };
     };
   };
-
 }

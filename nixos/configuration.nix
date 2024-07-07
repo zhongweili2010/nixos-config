@@ -144,8 +144,8 @@
 
   environment.systemPackages = with pkgs; [
     google-chrome
-    alacritty
     git
+    nfs-utils
  ];
 
 
@@ -181,8 +181,8 @@
 
 
   # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
+  networking.firewall.allowedTCPPorts = [ 111 137 138 139 445 2049];
+  networking.firewall.allowedUDPPorts = [ 2049 111 ];
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
 
