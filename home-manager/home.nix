@@ -8,6 +8,7 @@ let
   };
 
   alacrittyConfigFile = import ./alacritty.nix { inherit config pkgs; };
+  neovimConfigFile = import ./neovim.nix { inherit config pkgs; };
 in
 {
   programs.home-manager.enable = true;
@@ -22,13 +23,15 @@ in
       vscode-with-extensions
       alacritty
       vlc
+      neovim
+      autokey-gtk
     ];
   };
 
 
 
   programs.alacritty=alacrittyConfigFile.alacrittyConfig;
-
+  programs.neovim=neovimConfigFile.neovimConfig;
 
   programs.zsh.enable = true;
 
