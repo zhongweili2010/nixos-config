@@ -24,7 +24,6 @@ in
       alacritty
       vlc
       neovim
-      autokey-gtk
     ];
   };
 
