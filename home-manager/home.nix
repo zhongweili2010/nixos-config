@@ -23,8 +23,7 @@ in
       vscode-with-extensions
       alacritty
       vlc
-      neovim
-    ];
+      ];
   };
 
 
