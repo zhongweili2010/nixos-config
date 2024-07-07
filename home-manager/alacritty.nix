@@ -2,61 +2,62 @@
 
 {
 
-  programs.alacritty = {
+  alacrittyConfig = {
     enable = true;
     settings = {
       env = {
         TERM = "screen-256color";
       };
       window = {
-        opacity = 0.5;
+        opacity = 0.75;
+        dynamic_title=true;
         dimensions = {
           columns = 0;
           lines = 0;
         };
+        padding={
+          x=2;
+          y=2;
+        };
+        decorations="full";
       };
+      colors={
+        draw_bold_text_with_bright_colors=true;
+      };
+      font={
+        normal={
+          family="Fira Code";
+          style="Retina";
+        };
+        bold={
+          family="Fira Code";
+          style="Bold";
+        };
+        italic={
+          family="Fira Code";
+          style="Italic";
+        };
+        size=12.0;
+        offset={
+          x=0;
+          y=0;
+        };
+        glyph_offset={
+          x=0;
+          y=0;
+        };
+      };
+      debug.render_timer=false;
+
+      selection={
+        semantic_escape_chars=",?`|:\"' ()[]{}<>";
+        save_to_clipboard=true;
+      };
+
     };
   };
 }
 
-
-
-
-
-# { zsh }:''
-# env:
-#   TERM: screen-256color
-
-# window:
-#   opacity: 1.0
-#   dimensions:
-#     columns: 0
-#     lines: 0
-
-#   padding:
-#     x: 2
-#     y: 2
-
-#   decorations: full
-
-# draw_bold_text_with_bright_colors: true
-
-# font:
-#   normal:
-#     family: "Fira Code"
-#     style: Retina
-
-#   # The bold font face
-#   bold:
-#     family: "Fira Code"
-#     style: Bold
-
-#   # The italic font face
-#   italic:
-#     family: "Fira Code"
-#   size: 8.0
-
-# debug.render_timer: false
 
 # # Base16 Default Dark 256 - alacritty color config
 # # Chris Kempson (http://chriskempson.com)
@@ -98,30 +99,3 @@
 # bell:
 #   animation: EaseOutExpo
 #   duration: 0
-
-
-# mouse_bindings:
-#   - { mouse: Middle, action: PasteSelection }
-
-# mouse:
-#   double_click: { threshold: 300 }
-#   triple_click: { threshold: 300 }
-
-#   faux_scrolling_lines: 1
-
-#   hide_when_typing: true
-
-# selection:
-#   semantic_escape_chars: ",?`|:\"' ()[]{}<>"
-#   save_to_clipboard: true
-
-# window.dynamic_title: true
-
-
-# live_config_reload: true
-
-# shell:
-#   program: ${zsh}/bin/zsh
-#   args:
-#     - --login
-# ''

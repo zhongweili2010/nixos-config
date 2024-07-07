@@ -7,44 +7,27 @@ let
     ];
   };
 
-  alacrittyConfig = import ./alacritty.nix { inherit config pkgs; };
+  alacrittyConfigFile = import ./alacritty.nix { inherit config pkgs; };
 in
 {
   programs.home-manager.enable = true;
+  fonts.fontconfig.enable=true;
 
   home ={
     username = "alex";
     homeDirectory="/home/alex";
 
     packages=with pkgs; [
+      fira-code
       vscode-with-extensions
       alacritty
       vlc
     ];
   };
-    programs.alacritty={
-      enable=true;
-      settings = {
-        env = {
-          TERM = "screen-256color";
-        };
-        window = {
-          opacity = 0.5;
-          dimensions = {
-            columns = 0;
-            lines = 0;
-          };
-        };
-      };    
-    };
 
 
-    # Import and apply the Alacritty configuration
-    # inherit (alacrittyConfig.programs.alacritty);
 
-    
-
-  # };
+  programs.alacritty=alacrittyConfigFile.alacrittyConfig;
 
 
   programs.zsh.enable = true;

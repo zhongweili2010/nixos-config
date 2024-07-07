@@ -44,7 +44,7 @@
 
 
   # Enable OpenGL
-  hardware.opengl = {
+  hardware.graphics = {
     enable = true;
   };
 
@@ -148,7 +148,9 @@
     nfs-utils
  ];
 
-
+  fonts.packages = with pkgs; [
+    (nerdfonts.override { fonts = [ "FiraCode" ]; })
+  ];
 
 
 #  environment.etc = {
