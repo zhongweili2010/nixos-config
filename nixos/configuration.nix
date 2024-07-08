@@ -4,6 +4,14 @@
 
 { config, lib, pkgs, ... }:
 
+
+
+let
+  dconfSettings = ''
+    [org/gnome/desktop/input-sources]
+    xkb-options=['ctrl:swap_lwin_lctl', 'ctrl:swap_rwin_rctl']
+  '';
+in
 {
   imports =
     [ # Include the results of the hardware scan.
@@ -48,14 +56,21 @@
     enable = true;
   };
 
-  # Enable the X11 windowing system.
-  services.xserver.enable = true;
 
-  # Enable the GNOME Desktop Environment.
-  services.xserver.displayManager.gdm.enable = true;
-  services.xserver.desktopManager.gnome.enable = true;
+  services.xserver = {
+    enable = true;
+    displayManager.gdm = {
+      enable = true;
+      wayland = true;  # Ensure Wayland is enabled
+    };
+    desktopManager.gnome.enable = true;
+    videoDrivers = [ "nvidia" ];
+    xkb = {
+      layout = "us";
+      variant = "";
+    };
+  };
 
-  services.xserver.videoDrivers = [ "nvidia"];
   hardware.nvidia = {
 
     # Modesetting is required.
@@ -88,12 +103,6 @@
     package = config.boot.kernelPackages.nvidiaPackages.production;
   };
 
-
-  # Configure keymap in X11
-  services.xserver.xkb = {
-    layout = "us";
-    variant = "";
-  };
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
@@ -146,6 +155,9 @@
     google-chrome
     git
     nfs-utils
+    gcc
+    cmake
+    # dconf
  ];
 
   fonts.packages = with pkgs; [

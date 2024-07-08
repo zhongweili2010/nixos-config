@@ -19,16 +19,16 @@
     plugins= with pkgs.vimPlugins; [
 
       nvim-lspconfig
-
       nvim-treesitter
       nvim-treesitter.withAllGrammars
       nvim-treesitter-textobjects
       rose-pine
 
+      telescope-fzf-native-nvim
       comment-nvim
       gruvbox-nvim
       neodev-nvim
-      
+
       vim-nix
       # {
       #   plugin = nvim-lspconfig;
@@ -55,17 +55,13 @@
           p.tree-sitter-rust
           p.tree-sitter-json
         ]));
-        config = toLuaFile ./nvim/plugin/treesitter.lua;
+        config = toLuaFile ./nvim/treesitter.lua;
       }
 
       ];
 
-    extraConfig =''
-        set background=dark
-        colorscheme rose-pine
-
+    extraLuaConfig =''
         ${builtins.readFile ./nvim/options.lua}
-
       '';
   };
 }

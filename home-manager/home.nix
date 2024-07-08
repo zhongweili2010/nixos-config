@@ -23,6 +23,15 @@ in
       vscode-with-extensions
       alacritty
       vlc
+
+      ### LSPs TODO: get lsps working
+      bash-language-server
+      rust-analyzer
+      luajitPackages.lua-lsp
+      pyright
+      vscode-langservers-extracted
+      nil
+
       ];
   };
 
