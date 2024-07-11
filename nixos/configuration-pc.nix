@@ -15,7 +15,7 @@ in
 {
   imports =
     [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
+      ./nixos/hardware-pc.nix
     ];
 
   # Bootloader.
@@ -117,20 +117,6 @@ in
     (nerdfonts.override { fonts = [ "FiraCode" ]; })
   ];
 
-
-#  environment.etc = {
-#    "xdg" = {
-#      source = "${pkgs.xdg-utils}/etc/xdg";
-#    };
-#  };
-
-#  environment.variables = {
-#    XDG_DATA_DIRS = "${config.environment.systemPackages}/share:${pkgs.xdg-utils}/share:/usr/share";
-#  };
-
-#  environment.sessionVariables = {
-#    XDG_DATA_DIRS = "${config.environment.systemPackages}/share:${pkgs.xdg-utils}/share:/usr/share";
-#  };
 
 
   # Some programs need SUID wrappers, can be configured further or are

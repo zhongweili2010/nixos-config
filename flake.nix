@@ -12,8 +12,7 @@
       pc = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         modules = [
-          ./nixos/hardware-pc.nix
-          ./nixos/configuration.nix
+          ./nixos/configuration-pc.nix
           home-manager.nixosModules.home-manager
           {
             home-manager.useGlobalPkgs = true;
@@ -23,10 +22,9 @@
         ];
       };
       mac = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
+        system = "aarch64-linux";
         modules = [
-          ./nixos/hardware-mac.nix
-          ./nixos/configuration.nix
+          ./nixos/configuration-mac.nix
           home-manager.nixosModules.home-manager
           {
             home-manager.useGlobalPkgs = true;
