@@ -24,9 +24,9 @@ local on_attach = function(_, bufnr)
     end, {})
   end
   
-  local capabilities = vim.lsp.protocol.make_client_capabilities()
-  capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
-  
+  capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
+
+
   --no mason
   require('lspconfig').nil_ls.setup {
       on_attach = on_attach,
@@ -36,7 +36,51 @@ local on_attach = function(_, bufnr)
         telemetry = { enable = false },
       },
   }
-  
+
+  require('lspconfig').rust_analyzer.setup{
+	on_attach=on_attach,
+	capabilities=capabilities,
+	settings={
+	["rust-analyzer"]={
+          cargo = {
+			allFeatures = true,
+			autoreload = true,
+			loadOutDirsFromCheck = true,
+			runBuildScripts = true,
+			},
+			checkOnSave={
+				command = "clippy",
+			},
+			procMacro = {
+				enable=true,
+			},
+			diagnostics = {
+				enable= true,
+				disabled={'inactive-code'},
+			
+			enableExperimental = true,
+			},
+			files={
+				excludDirs={
+					".git",
+					"target",
+
+				}
+			},
+			inlayHints = {
+				typeHints=true,
+				parameterHints = true,
+			
+			},
+	}
+
+
+	}
+
+
+}
+
+
   -- mason
 --   require("mason").setup()
 --   require("mason-lspconfig").setup_handlers({

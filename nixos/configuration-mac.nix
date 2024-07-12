@@ -4,6 +4,7 @@
     imports =
     [
       ./hardware-mac.nix
+      ../overlays/mozilla-overlay.nix
     ];
   nixpkgs.config.allowUnfree = true;
 
