@@ -25,9 +25,6 @@
         system = "aarch64-linux";
         modules = [
           ./nixos/configuration-mac.nix
-          {
-            nixpkgs.overlays=[(import ./overlays/mozilla-overlay.nix)];
-          }
           home-manager.nixosModules.home-manager
           {
             home-manager.useGlobalPkgs = true;

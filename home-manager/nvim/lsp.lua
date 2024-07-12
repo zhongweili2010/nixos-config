@@ -43,7 +43,7 @@ local on_attach = function(_, bufnr)
 	settings={
 	["rust-analyzer"]={
           cargo = {
-			allFeatures = true,
+			allFeatures=true,
 			autoreload = true,
 			loadOutDirsFromCheck = true,
 			runBuildScripts = true,
@@ -57,15 +57,13 @@ local on_attach = function(_, bufnr)
 			diagnostics = {
 				enable= true,
 				disabled={'inactive-code'},
-			
-			enableExperimental = true,
+			-- enableExperimental = true,
 			},
 			files={
 				excludDirs={
 					".git",
 					"target",
-
-				}
+				},
 			},
 			inlayHints = {
 				typeHints=true,
@@ -73,10 +71,7 @@ local on_attach = function(_, bufnr)
 			
 			},
 	}
-
-
-	}
-
+    }
 
 }
 

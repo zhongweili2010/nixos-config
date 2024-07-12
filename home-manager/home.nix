@@ -1,27 +1,23 @@
 { config, pkgs, ... }:
 
 let
-  vscode-with-extensions=pkgs.vscode-with-extensions.override {
-    vscodeExtensions = with pkgs.vscode-extensions; [
-      jnoortheen.nix-ide
-    ];
-  };
-
   alacrittyConfigFile = import ./alacritty.nix { inherit config pkgs; };
   neovimConfigFile = import ./neovim.nix { inherit config pkgs; };
-  rustPackages= with mozillaPkgs.latest.rustChannels.stable;[
-    rust
-    cargo
-    rust-analyzer
-  ];
-  commonPkgs= with pkgs; [
-    fira-code
-    alacritty
-    vlc
-    nil
-  ];
+
+  overlays=
+    let
+      moz-url = builtins.fetchTarball {url="https://github.com/mozilla/nixpkgs-mozilla/archive/master.tar.gz";};
+      rust-overlay=(import "${moz-url}/rust-overlay.nix");
+    in
+    [
+      rust-overlay
+    ];
+    pkgs= import <nixpkgs>{
+      inherit overlays;
+    };
 in
 {
+
   programs.home-manager.enable = true;
   fonts.fontconfig.enable=true;
 
@@ -30,9 +26,7 @@ in
     homeDirectory="/home/alex";
 
     packages= with pkgs;[
-      mozillaPkgs.latest.rustChannels.stable
-      mozillaPkgs.cargo
-      mozillaPkgs.rust-analyzer
+      latest.rustChannels.stable.rust
 
       fira-code
       alacritty
