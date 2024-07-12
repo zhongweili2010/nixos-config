@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ pkgs, ... }:
 
 {
 
@@ -15,10 +15,12 @@
     vimdiffAlias = true;
 
 
-    
     plugins= with pkgs.vimPlugins; [
 
+
       nvim-lspconfig
+      nvim-cmp
+      cmp-nvim-lsp
       nvim-treesitter
       nvim-treesitter.withAllGrammars
       nvim-treesitter-textobjects
@@ -30,10 +32,16 @@
       neodev-nvim
 
       vim-nix
-      # {
-      #   plugin = nvim-lspconfig;
-      #   config = toLuaFile ./nvim/plugin/lsp.lua;
-      # }
+
+      {
+        plugin = nvim-cmp;
+        config = toLuaFile ./nvim/cmp.lua;
+
+      }
+      {
+        plugin = nvim-lspconfig;
+        config = toLuaFile ./nvim/lsp.lua;
+      }
 
       {
         plugin = comment-nvim;

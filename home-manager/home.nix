@@ -22,15 +22,15 @@ in
       fira-code
       vscode-with-extensions
       alacritty
-      vlc
 
+      vlc
+      nil
       ### LSPs TODO: get lsps working
       bash-language-server
       rust-analyzer
       luajitPackages.lua-lsp
       pyright
       vscode-langservers-extracted
-      nil
 
       ];
   };
@@ -39,7 +39,6 @@ in
 
   programs.alacritty=alacrittyConfigFile.alacrittyConfig;
   programs.neovim=neovimConfigFile.neovimConfig;
-
   programs.zsh.enable = true;
 
   home.stateVersion = "23.05"; # Update this to match your Home Manager version

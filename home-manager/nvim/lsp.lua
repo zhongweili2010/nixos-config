@@ -27,8 +27,8 @@ local on_attach = function(_, bufnr)
   local capabilities = vim.lsp.protocol.make_client_capabilities()
   capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
   
-  no mason
-  require('lspconfig').lua_ls.setup {
+  --no mason
+  require('lspconfig').nil_ls.setup {
       on_attach = on_attach,
       capabilities = capabilities,
       Lua = {
