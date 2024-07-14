@@ -4,24 +4,17 @@
 
 { config, lib, pkgs, ... }:
 
-
-
-let
-  dconfSettings = ''
-    [org/gnome/desktop/input-sources]
-    xkb-options=['ctrl:swap_lwin_lctl', 'ctrl:swap_rwin_rctl']
-  '';
-in
 {
   imports =
     [ # Include the results of the hardware scan.
-      ./nixos/hardware-pc.nix
+    ./hardware-pc.nix
     ];
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-
+  boot.kernelPackages=pkgs.linuxPackages;
+  boot.kernelParams=["apparmor=1" "security=apparmor"];
   networking.hostName = "nixos"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
@@ -58,7 +51,7 @@ in
 
 
   # Enable CUPS to print documents.
-  services.printing.enable = true;
+  services.printing.enable = false;
 
   # Enable sound with pipewire.
   hardware.pulseaudio.enable = false;
@@ -97,7 +90,6 @@ in
   systemd.services."getty@tty1".enable = false;
   systemd.services."autovt@tty1".enable = false;
 
-
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
@@ -107,17 +99,15 @@ in
   environment.systemPackages = with pkgs; [
     google-chrome
     git
-    nfs-utils
     gcc
     cmake
-    # dconf
+    wget
  ];
 
   fonts.packages = with pkgs; [
     (nerdfonts.override { fonts = [ "FiraCode" ]; })
   ];
-
-
+  
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
@@ -134,10 +124,10 @@ in
 
 
   # Open ports in the firewall.
-  networking.firewall.allowedTCPPorts = [ 111 137 138 139 445 2049];
-  networking.firewall.allowedUDPPorts = [ 2049 111 ];
+  # networking.firewall.allowedTCPPorts = [ 111 137 138 139 445 2049];
+  # networking.firewall.allowedUDPPorts = [ 2049 111 ];
   # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
+  networking.firewall.enable = true;
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions

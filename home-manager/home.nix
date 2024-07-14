@@ -4,6 +4,7 @@ let
   alacrittyConfigFile = import ./alacritty.nix { inherit config pkgs; };
   neovimConfigFile = import ./neovim.nix { inherit config pkgs; };
 
+
   overlays=
     let
       moz-url = builtins.fetchTarball {url="https://github.com/mozilla/nixpkgs-mozilla/archive/master.tar.gz";};
@@ -32,6 +33,7 @@ in
       alacritty
       vlc
       nil
+      exercism
     ];
   };
 
