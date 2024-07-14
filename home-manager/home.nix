@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 let
   alacrittyConfigFile = import ./alacritty.nix { inherit config pkgs; };
@@ -36,6 +36,50 @@ in
       exercism
     ];
   };
+
+
+  home.activation = {
+    updateNvChad = lib.hm.dag.entryAfter ["writeBoundary"] ''
+      if [ -d ~/.config/nvim ]; then
+        rm -rf ~/.config/nvim
+      fi
+      cp -r ${./nvchad-config} ~/.config/nvim
+    '';
+  };
+
+
+  # Add the LSP configurations
+  home.file = {
+    ".config/nvim/lua/custom/chadrc.lua" = {
+      text = ''
+        local M = {}
+        M.ui = {theme = 'gruvbox'}
+        M.plugins = "custom.plugins"
+        M.mappings = require "custom.mappings"
+        return M
+      '';
+    };
+
+    ".config/nvim/lua/custom/plugins.lua" = {
+      text = ''
+        local plugins = {
+          -- Add your plugins here
+          { "neovim/nvim-lspconfig" },
+        }
+        return plugins
+      '';
+    };
+
+    ".config/nvim/lua/custom/mappings.lua" = {
+      text = ''
+        local M = {}
+        -- Add your key mappings here
+        return M
+      '';
+    };
+  };
+
+
 
 
 

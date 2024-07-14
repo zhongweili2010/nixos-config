@@ -102,6 +102,7 @@
     gcc
     cmake
     wget
+    vscode
  ];
 
   fonts.packages = with pkgs; [

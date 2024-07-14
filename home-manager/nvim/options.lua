@@ -14,5 +14,5 @@ vim.o.shiftwidth = 4
 vim.o.updatetime = 300
 
 vim.o.termguicolors = true
-
+vim.g.have_nerd_font= true
 vim.o.mouse = 'a'
