@@ -3,21 +3,35 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    home-manager.url = "github:nix-community/home-manager";
-    home-manager.inputs.nixpkgs.follows = "nixpkgs";
+    home-manager = {
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    mozilla = {
+      url= "github:mozilla/nixpkgs-mozilla";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { self, nixpkgs, home-manager }: {
+  outputs = { self, nixpkgs, home-manager, ... }@inputs:
+    let
+      lib = nixpkgs.lib;
+      system = "x86_64-linux";
+      extraSpecialArgs = { inherit inputs; };
+    in {
     nixosConfigurations = {
-      pc = nixpkgs.lib.nixosSystem {
+      pc = lib.nixosSystem {
         system = "x86_64-linux";
         modules = [
           ./nixos/configuration-pc.nix
           home-manager.nixosModules.home-manager
           {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.users.alex = import ./home-manager/home.nix;
+            home-manager ={
+              inherit extraSpecialArgs;
+              useGlobalPkgs = true;
+              useUserPackages = true;
+              users.alex = import ./home-manager/home.nix;
+            };
           }
         ];
       };
@@ -27,9 +41,12 @@
           ./nixos/configuration-mac.nix
           home-manager.nixosModules.home-manager
           {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.users.alex = import ./home-manager/home.nix;
+            home-manager ={
+              inherit extraSpecialArgs;
+              useGlobalPkgs = true;
+              useUserPackages = true;
+              users.alex = import ./home-manager/home.nix;
+            };
           }
         ];
       };

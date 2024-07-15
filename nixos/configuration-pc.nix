@@ -97,6 +97,7 @@
   # $ nix search wget
 
   environment.systemPackages = with pkgs; [
+    nerdfonts
     google-chrome
     git
     gcc
