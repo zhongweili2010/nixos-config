@@ -14,7 +14,10 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.kernelPackages=pkgs.linuxPackages;
-  boot.kernelParams=["apparmor=1" "security=apparmor"];
+  boot.kernelModules = [ "nouveau" ];
+  boot.blacklistedKernelModules = [ "nvidia-drm" "nvidia" "nvidia-modeset" "nvidia-uvm" ];
+
+  # boot.kernelParams=["apparmor=1" "security=apparmor"];
   networking.hostName = "nixos"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
@@ -27,6 +30,15 @@
 
   # Set your time zone.
   time.timeZone = "America/Los_Angeles";
+
+  programs.bash = {
+    shellInit = ''
+      eval "$(direnv hook bash)"
+    '';
+  };
+
+
+
 
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
@@ -47,6 +59,12 @@
   # Enable OpenGL
   hardware.graphics = {
     enable = true;
+    # extraPackages = with pkgs; [
+    #   # Add packages needed for Nouveau acceleration here
+    #   # For example, Mesa for OpenGL:
+    #   mesa
+    #   mesa.drivers
+    # ];
   };
 
 
@@ -92,11 +110,17 @@
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
+  nix.extraOptions = ''
+    experimental-features = nix-command flakes
+  '';
+
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
 
   environment.systemPackages = with pkgs; [
+    mesa
+    fontconfig
     nerdfonts
     google-chrome
     git
@@ -106,9 +130,30 @@
     vscode
  ];
 
-  fonts.packages = with pkgs; [
-    (nerdfonts.override { fonts = [ "FiraCode" ]; })
-  ];
+  fonts = {
+    fontDir.enable = true;
+    fontconfig = {
+      enable = true;
+      defaultFonts = {
+        # Add your preferred fonts here
+        sansSerif = [ "JetBrainsMono" ];
+        serif = [ "JetBrainsMono" ];
+        monospace = [ "JetBrainsMono" ];
+      };
+      allowBitmaps = false;
+      antialias = true;
+      hinting = {
+        autohint = true;
+        enable = true;
+        style = "slight"; # Options: "none", "slight", "medium", "full"
+      };
+      subpixel={
+        lcdfilter = "default"; # Options: "none", "default", "light", "legacy"
+        rgba = "rgb"; # Options: "none", "rgb", "bgr", "vrgb", "vbgr"
+      };
+    };
+  };
+
   
 
   # Some programs need SUID wrappers, can be configured further or are

@@ -9,6 +9,15 @@ let
     ];
   };
 
+  zed-fhs = pkgs.buildFHSUserEnv {
+    name="zed";
+    targetPkgs=pkgs:
+    with pkgs;[
+      zed-editor
+    ];
+    runScript="zed";
+  };
+
 in {
   programs.home-manager.enable = true;
   fonts.fontconfig.enable=true;
@@ -18,20 +27,19 @@ in {
     homeDirectory="/home/alex";
 
     packages= with pkgs;[
-      zed-editor
+      zed-fhs
       latest.rustChannels.stable.rust
       fira-code
       alacritty
       vlc
       nil
       exercism
+      direnv
     ];
-
   };
 
   programs.alacritty=alacrittyConfigFile.alacrittyConfig;
-  
-  programs.zsh.enable = true;
+
   home.stateVersion = "23.05"; # Update this to match your Home Manager version
 
 }
